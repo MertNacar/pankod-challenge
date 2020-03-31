@@ -1,66 +1,35 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import './App.css';
+import "./App.css";
+import Home from "./screens/Home/Home";
+import Movies from "./screens/Movies/Movies";
+import Series from "./screens/Series/Series";
 
-function App() {
+const App: React.FC = () => {
   return (
     <div>
       <Router>
         <div>
           <ul>
             <li>
-              <Link to="/">Books</Link>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/create">Create</Link>
+              <Link to="/Movies">Movies</Link>
+            </li>
+            <li>
+              <Link to="/Series">Series</Link>
             </li>
           </ul>
 
           <hr />
-          <Route exact path="/" component={Root} />
-          <Route path="/create" component={Create} />
-          <Route path="/detail/:id" component={Detail} />
-
-
-
+          <Route exact path="/" component={Home} />
+          <Route path="/Movies" component={Movies} />
+          <Route path="/Series" component={Series} />
         </div>
       </Router>
     </div>
-}
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: localStorage.getItem('myDataID')
-    }
-  }
-  render() {
-    return (
-      <div>
-        <Router>
-          <div>
-            <ul>
-              <li>
-                <Link to="/">Books</Link>
-              </li>
-              <li>
-                <Link to="/create">Create</Link>
-              </li>
-            </ul>
-
-            <hr />
-            <Route exact path="/" component={Root} />
-            <Route path="/create" component={Create} />
-            <Route path="/detail/:id" component={Detail} />
-
-
-
-          </div>
-        </Router>
-      </div>
-    );
-  }
-}
+  );
+};
 
 export default App;
