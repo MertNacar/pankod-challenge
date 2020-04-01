@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <meta name="pankod challenge" content="Web site created using create-react-app" />
-
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/css/index.css" />
   <title>React App</title>
 </head>
 
@@ -15,24 +15,47 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <header>
     <nav class="navbar navbar-dark bg-primary">
-      <a class="col-10 text-light text-decoration-none" href="%PUBLIC_URL%/">
+      <a class="col-10 col-md-10 col-xs-12 text-light text-decoration-none" href="%PUBLIC_URL%/">
         <h4>
           Demo Streaming
         </h4>
       </a>
-      <span class=" col-1 navbar-text text-light">
+      <span class=" col-1 col-md-1 col-xs-12 navbar-text text-light">
         Log in
       </span>
-      <button class="col-1 btn btn-dark" type="submit">
-        Start your free trial
-      </button>
+ 
+
+        <button class="col-1 col-md-1 col-xs-12 btn btn-dark" type="submit">
+          Start your free trial
+        </button>
+
+
     </nav>
   </header>
 
   </div>
   <div id="root"></div>
-  <footer>
-    <div class="row"></div>
+  <footer class="bg-dark footer">
+    <div class="row">
+      <p class="text-light">
+        Home | Terms and Conditions | Privacy Policy | Collection Statement | Help | Manage Account
+      </p>
+    </div>
+    <div class="row">
+      <p class="text-light"> Copyright 2016 DEMO Streaming. All Rights Reserved</p>
+    </div>
+    <div class="row">
+      <span class="col-6">
+        <img width="75" height="20" src="./assets/images/social/facebook-white.svg " alt="facebook-icon">
+        <img width="75" height="20" src="./assets/images/social/twitter-white.svg" alt="twitter-icon">
+        <img width="75" height="20" src="./assets/images/social/instagram-white.svg" alt="instagram-icon">
+      </span>
+      <span class="col-6">
+        <img width="135" height="40" src="./assets/images/store/app-store.svg" alt="app-store">
+        <img width="135" height="40" src="./assets/images/store/play-store.svg" alt="play-store">
+        <img width="135" height="40" src="./assets/images/store/windows-store.svg" alt="win-store">
+      </span>
+    </div>
   </footer>
 </body>
 
