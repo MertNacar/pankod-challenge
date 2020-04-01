@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="d-flex bg-dark footer px-5">
+    <footer className="d-flex bg-dark position-fixed fixed-bottom px-5">
       <div className="flex-cloumn w-100">
         <p className="text-light pt-5">
           Home | Terms and Conditions | Privacy Policy | Collection Statement |

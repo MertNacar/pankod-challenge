@@ -1,7 +1,9 @@
-import { IMoviesState, MoviesActionTypes, UPDATE_MOVIES } from "./types";
+import { MoviesActionTypes, UPDATE_MOVIES } from "./types";
+import { IMoviesState } from "../../screens/Movies/types";
 
 const initialState: IMoviesState = {
-  movies: []
+  total: 0,
+  entries: []
 };
 
 export const moviesReducer = (

@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
-import Home from "./screens/Home/Home";
-import Movies from "./screens/Movies/Movies";
-import Series from "./screens/Series/Series";
+import HomeScreen from "./screens/Home/HomeScreen";
+import MoviesScreen from "./screens/Movies/MoviesScreen";
+import SeriesScreen from "./screens/Series/SeriesScreen";
 import Header from './components/Header'
 import Footer from './components/Footer'
 
@@ -12,9 +12,9 @@ const App: React.FC = () => {
     <div>
       <Header />
       <Router>
-        <Route exact path="/" component={Home} />
-        <Route path="/Movies" component={Movies} />
-        <Route path="/Series" component={Series} />
+        <Route exact path="/" component={HomeScreen} />
+        <Route path="/Movies" component={MoviesScreen} />
+        <Route path="/Series" component={SeriesScreen} />
       </Router>
       <Footer />
     </div>

@@ -1,13 +1,12 @@
 import React from "react";
 
-
 interface IProp {
   image: string;
   alt: string;
   title: string;
 }
 
-const SeriesMoviesCard: React.FC<IProp> = (props) => {
+const SeriesMoviesCard: React.FC<IProp> = props => {
   return (
     <div className="card" style={{ borderWidth: 0 }}>
       <img

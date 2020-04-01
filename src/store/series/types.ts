@@ -11,8 +11,4 @@ interface IUpdateSeriesAction {
   payload: ISeries;
 }
 
-export interface ISeriesState {
-  series: [];
-}
-
-export type SeriesActionTypes = IUpdateSeriesAction; 
+export type SeriesActionTypes = IUpdateSeriesAction;

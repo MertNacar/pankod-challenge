@@ -3,7 +3,7 @@ import SubNavBar from "../../components/SubNavbar";
 import MainTile from "../../components/MainTile";
 import clipart from "../../assets/images/clipart.png";
 
-const Home: React.FC = () => {
+const HomeScreen: React.FC = () => {
   return (
     <div>
       <SubNavBar title="Popular Titles" />
@@ -29,4 +29,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default HomeScreen;

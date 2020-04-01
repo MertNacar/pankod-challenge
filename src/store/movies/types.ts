@@ -11,8 +11,5 @@ interface IUpdateMoviesAction {
   payload: IMovies;
 }
 
-export interface IMoviesState {
-  movies: [];
-}
 
 export type MoviesActionTypes = IUpdateMoviesAction; 

@@ -1,7 +1,9 @@
-import { ISeriesState, SeriesActionTypes, UPDATE_SERIES } from "./types";
+import { SeriesActionTypes, UPDATE_SERIES } from "./types";
+import { ISeriesState } from "../../screens/Series/types";
 
 const initialState: ISeriesState = {
-  series: []
+  total: 0,
+  entries: []
 };
 
 export const seriesReducer = (
