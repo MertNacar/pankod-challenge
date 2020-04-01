@@ -1,6 +1,6 @@
-import { SeriesState, SeriesActionTypes, UPDATE_SERIES } from "./types";
+import { ISeriesState, SeriesActionTypes, UPDATE_SERIES } from "./types";
 
-const initialState: SeriesState = {
+const initialState: ISeriesState = {
   series: []
 };
 

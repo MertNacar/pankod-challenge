@@ -1,10 +1,10 @@
-import { MoviesState, MoviesActionTypes, UPDATE_MOVIES } from "./types";
+import { IMoviesState, MoviesActionTypes, UPDATE_MOVIES } from "./types";
 
-const initialState: MoviesState = {
+const initialState: IMoviesState = {
   movies: []
 };
 
-export const seriesReducer = (
+export const moviesReducer = (
   state = initialState,
   action: MoviesActionTypes
 ) => {

@@ -1,14 +1,13 @@
 import React from "react";
-import "bootstrap";
 
-interface Prop {
+interface IProp {
   title: string;
 }
 
-const SubNavBar: React.FC<Prop> = (props: Prop) => {
+const SubNavBar: React.FC<IProp> = (props) => {
   return (
-    <nav className="navbar navbar-dark bg-dark">
-      <h4 className="navbar-brand">{props.title}</h4>
+    <nav className="shadow navbar navbar-dark bg-dark">
+      <h4 className="navbar-brand px-5">{props.title}</h4>
     </nav>
   );
 };

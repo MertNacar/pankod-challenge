@@ -1,10 +1,10 @@
 import { createStore, combineReducers } from 'redux'
-import { userReducer } from "./series/reducer";
-import { cafeReducer } from "./movies/reducer";
+import { seriesReducer } from "./series/reducer";
+import { moviesReducer } from "./movies/reducer";
 
 const rootReducer = combineReducers({
-  movies: userReducer,
-  series: cafeReducer,
+  movies: moviesReducer,
+  series: seriesReducer
 });
 
 const configureStore = () => {
