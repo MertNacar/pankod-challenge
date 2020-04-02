@@ -1,14 +1,9 @@
-// src/store/chat/types.ts
+import { ISeriesState } from "../../screens/Series/types";
 export const UPDATE_SERIES = "UPDATE_SERIES";
-
-export interface ISeries {
-  type: typeof UPDATE_SERIES;
-  payload: number;
-}
 
 interface IUpdateSeriesAction {
   type: typeof UPDATE_SERIES;
-  payload: ISeries;
+  payload: ISeriesState;
 }
 
 export type SeriesActionTypes = IUpdateSeriesAction;

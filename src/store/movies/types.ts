@@ -1,15 +1,9 @@
-// src/store/chat/types.ts
+import { IMoviesState } from "../../screens/Movies/types";
 export const UPDATE_MOVIES = "UPDATE_MOVIES";
-
-export interface IMovies {
-  type: typeof UPDATE_MOVIES;
-  payload: number;
-}
 
 interface IUpdateMoviesAction {
   type: typeof UPDATE_MOVIES;
-  payload: IMovies;
+  payload: IMoviesState;
 }
 
-
-export type MoviesActionTypes = IUpdateMoviesAction; 
+export type MoviesActionTypes = IUpdateMoviesAction;

@@ -6,9 +6,9 @@ import SeriesMoviesList from "../../components/SeriesMoviesList";
 import SearchBox from "../../components/SearchBox";
 import LoadingScreen from "../Loading/LoadingScreen";
 import ErrorScreen from "../Error/ErrorScreen";
-import { IReduxState, IStateProps, IDispatchProps } from "../../store/store";
+import { IReduxState, IDispatchProps } from "../../store/store";
 import { updateSeries } from "../../store/series/action";
-import { SeriesActionTypes, ISeries } from "../../store/series/types";
+import { SeriesActionTypes } from "../../store/series/types";
 import { ISeriesState } from "./types";
 import { get } from "../../utils/httpHelper";
 import "bootstrap";
@@ -46,6 +46,7 @@ const SeriesScreen: React.FC<any> = props => {
           });
         props.updateSeries({ total: 21, entries: filteredValues });
         setSeries({ total: 21, entries: filteredValues });
+        console.log("filteredValues", filteredValues);
         setLoading(false);
       } else throw new Error();
     } catch {
@@ -76,6 +77,8 @@ const SeriesScreen: React.FC<any> = props => {
       </div>
     );
   } else {
+    console.log("props movies", props.series);
+
     return (
       <div>
         <SubNavBar title="Popular Series" />
@@ -131,7 +134,7 @@ const SeriesScreen: React.FC<any> = props => {
   }
 };
 
-function mapStateToProps(state: IReduxState): IStateProps {
+function mapStateToProps(state: IReduxState): IReduxState {
   return {
     series: state.series
   };
@@ -139,12 +142,12 @@ function mapStateToProps(state: IReduxState): IStateProps {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch): IDispatchProps {
   return {
-    updateSeries: (series: ISeries): SeriesActionTypes =>
+    updateSeries: (series: ISeriesState): SeriesActionTypes =>
       dispatch(updateSeries(series))
   };
 }
 
-export default connect<IStateProps, IDispatchProps>(
+export default connect<IReduxState, IDispatchProps>(
   mapStateToProps,
   mapDispatchToProps
 )(SeriesScreen);

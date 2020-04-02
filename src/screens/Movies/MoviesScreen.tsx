@@ -6,23 +6,29 @@ import SearchBox from "../../components/SearchBox";
 import SeriesMoviesList from "../../components/SeriesMoviesList";
 import LoadingScreen from "../Loading/LoadingScreen";
 import ErrorScreen from "../Error/ErrorScreen";
-import { IReduxState, IStateProps, IDispatchProps } from "../../store/store";
+import { IReduxState, IDispatchProps } from "../../store/store";
 import { updateMovies } from "../../store/movies/action";
-import { MoviesActionTypes, IMovies } from "../../store/movies/types";
+import { MoviesActionTypes } from "../../store/movies/types";
 import { IMoviesState } from "./types";
 import { get } from "../../utils/httpHelper";
+import $ from "jquery";
 
 const MoviesScreen: React.FC<any> = props => {
   const [movies, setMovies] = useState<IMoviesState>({ total: 0, entries: [] });
   const [loading, setLoading] = useState<Boolean>(true);
   const [err, setErr] = useState<Boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
+  const [dropdownValue, setDropdownValue] = useState("Sort by");
 
   useEffect(() => {
     if (props.movies.entries.length === 0) {
       getData();
+    } else if (searchValue.length >= 3) {
+      getSearchedData();
+    } else if (dropdownValue != "Sort by") {
+      getOrderedData();
     }
-  }, []);
+  }, [searchValue, dropdownValue]);
 
   async function getData() {
     try {
@@ -45,7 +51,6 @@ const MoviesScreen: React.FC<any> = props => {
           });
 
         props.updateMovies({ total: newTotal, entries: filteredValues });
-        console.log('props.movies', props.movies)
         setMovies({ total: newTotal, entries: filteredValues });
         setLoading(false);
       } else throw new Error();
@@ -57,33 +62,36 @@ const MoviesScreen: React.FC<any> = props => {
 
   function getSearchedData() {
     setLoading(true);
-    console.log('props.movies', props.movies)
-    let filteredValues = props.movies.map((item: any) => {
-      return item.search(searchValue) !== -1 ? true : false;
+    let filteredValues = props.movies.entries.filter((item: any) => {
+      return item.title.toLowerCase().search(searchValue.toLowerCase()) !== -1
+        ? true
+        : false;
     });
-    console.log('filteredValues', filteredValues)
     setMovies({ total: filteredValues.length, entries: filteredValues });
     setLoading(false);
   }
 
-  /*function getOrderedData() {
-    setLoading(true);
-    props.movies.filter((item: any) => {
-      return item.search(searchValue);
+  function getOrderedData() {
+    let values = dropdownValue.split(" ");
+    let chosenValue = values[0] === "Title" ? "title" : "releaseYear";
+    let orderedValues = props.movies.entries.sort((prev: any, next: any) => {
+      return values[1] === "ascending"
+        ? prev[chosenValue] - next[chosenValue]
+        : next[chosenValue] - prev[chosenValue];
     });
-    setMovies({ total: 21, entries: filteredValues });
-    setLoading(false);
+    setMovies({ total: orderedValues.length, entries: orderedValues });
   }
 
-  function normalizationDropdown(e) {
-    $("#dropdownMovies li").on("click", function() {
-      $("#datebox").val($(this).text());
+  function getValueDropdown() {
+    $("#dropdownMovies a").on("click", function() {
+      if ($(this).text() !== dropdownValue) {
+        setDropdownValue($(this).text());
+      }
     });
-  }*/
+  }
 
   function searchInput(e: FormEvent<HTMLInputElement>) {
     setSearchValue(e.currentTarget.value);
-    if (e.currentTarget.value.length >= 3) getSearchedData();
   }
 
   function searchClick() {
@@ -121,30 +129,31 @@ const MoviesScreen: React.FC<any> = props => {
               <button
                 className="btn btn-light dropdown-toggle"
                 type="button"
-                id="dropdownMenuButton"
+                id="orderButton"
                 data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
+                onClick={() => getValueDropdown()}
               >
-                Sort by
+                {dropdownValue}
               </button>
               <div
-                id="dropdownSeries"
+                id="dropdownMovies"
                 className="dropdown-menu dropdown-menu-right"
-                aria-labelledby="dropdownMenuButton"
               >
-                <li>
-                  <a className="dropdown-item">Year descending</a>
-                </li>
-                <li>
-                  <a className="dropdown-item">Year ascending</a>
-                </li>
-                <li>
-                  <a className="dropdown-item">Title descending</a>
-                </li>
-                <li>
-                  <a className="dropdown-item">Title Ascending</a>
-                </li>
+                <a className="dropdown-item" href="#">
+                  Year descending
+                </a>
+
+                <a className="dropdown-item" href="#">
+                  Year ascending
+                </a>
+
+                <a className="dropdown-item" href="#">
+                  Title descending
+                </a>
+
+                <a className="dropdown-item" href="#">
+                  Title Ascending
+                </a>
               </div>
             </div>
           </div>
@@ -160,7 +169,7 @@ const MoviesScreen: React.FC<any> = props => {
   }
 };
 
-function mapStateToProps(state: IReduxState): IStateProps {
+function mapStateToProps(state: IReduxState): IReduxState {
   return {
     movies: state.movies
   };
@@ -168,12 +177,12 @@ function mapStateToProps(state: IReduxState): IStateProps {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch): IDispatchProps {
   return {
-    updateMovies: (movies: IMovies): MoviesActionTypes =>
+    updateMovies: (movies: IMoviesState): MoviesActionTypes =>
       dispatch(updateMovies(movies))
   };
 }
 
-export default connect<IStateProps, IDispatchProps>(
+export default connect<IReduxState, IDispatchProps>(
   mapStateToProps,
   mapDispatchToProps
 )(MoviesScreen);

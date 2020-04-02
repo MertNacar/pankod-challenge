@@ -11,7 +11,7 @@ interface IProp {
 const SearchBox: React.FC<IProp> = props => {
   return (
     <div className="d-flex" >
-      <form className="form-inline" >
+      <span className="form-inline" >
         <input
           className="form-control shadow"
           style={{ borderRadius: 0 }}
@@ -24,11 +24,10 @@ const SearchBox: React.FC<IProp> = props => {
           className="btn btn-primary"
           style={{ borderRadius: 0 }}
           onClick={props.searchClick}
-          type="submit"
         >
           <FaSearch color="white" />
         </button>
-      </form>
+      </span>
     </div>
   );
 };
