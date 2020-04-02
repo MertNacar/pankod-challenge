@@ -2,56 +2,44 @@ import React, { useState, useEffect, FormEvent } from "react";
 import * as Redux from "redux";
 import { connect } from "react-redux";
 import SubNavBar from "../../components/SubNavbar";
-import SearchBox from "../../components/SearchBox";
-import SeriesMoviesList from "../../components/SeriesMoviesList";
+import Content from "../../components/Content";
 import LoadingScreen from "../Loading/LoadingScreen";
 import ErrorScreen from "../Error/ErrorScreen";
+import {
+  GetAllData,
+  GetSearchedData,
+  GetOrderedNumberData,
+  GetOrderedTextData
+} from "../../services/MovieSerieService";
 import { IReduxState, IDispatchProps } from "../../store/store";
 import { updateMovies } from "../../store/movies/action";
 import { MoviesActionTypes } from "../../store/movies/types";
 import { IMoviesState } from "./types";
-import { get } from "../../utils/httpHelper";
-import $ from "jquery";
+import 'bootstrap'
 
 const MoviesScreen: React.FC<any> = props => {
   const [movies, setMovies] = useState<IMoviesState>({ total: 0, entries: [] });
+  const [dropdownValue, setDropdownValue] = useState("Sort by");
+  const [searchValue, setSearchValue] = useState<string>("");
   const [loading, setLoading] = useState<Boolean>(true);
   const [err, setErr] = useState<Boolean>(false);
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [dropdownValue, setDropdownValue] = useState("Sort by");
 
   useEffect(() => {
     if (props.movies.entries.length === 0) {
       getData();
     } else if (searchValue.length >= 3) {
       getSearchedData();
-    } else if (dropdownValue != "Sort by") {
+    } else if (dropdownValue !== "Sort by") {
       getOrderedData();
     }
   }, [searchValue, dropdownValue]);
 
   async function getData() {
     try {
-      let res = await get("feed/sample.json");
+      let res = await GetAllData("feed/sample.json", 21, "movie");
       if (!res.err) {
-        let newTotal: number = 0;
-        let filteredValues = res.data.entries
-          .filter((item: any) => {
-            if (
-              newTotal < 21 &&
-              item.releaseYear >= 2010 &&
-              item.programType === "movie"
-            ) {
-              newTotal++;
-              return item;
-            }
-          })
-          .sort((a: any, b: any) => {
-            return a.title - b.title;
-          });
-
-        props.updateMovies({ total: newTotal, entries: filteredValues });
-        setMovies({ total: newTotal, entries: filteredValues });
+        props.updateMovies({ total: res.values.length, entries: res.values });
+        setMovies({ total: res.values.length, entries: res.values });
         setLoading(false);
       } else throw new Error();
     } catch {
@@ -62,32 +50,34 @@ const MoviesScreen: React.FC<any> = props => {
 
   function getSearchedData() {
     setLoading(true);
-    let filteredValues = props.movies.entries.filter((item: any) => {
-      return item.title.toLowerCase().search(searchValue.toLowerCase()) !== -1
-        ? true
-        : false;
-    });
-    setMovies({ total: filteredValues.length, entries: filteredValues });
+    let searches = GetSearchedData(props.movies.entries, searchValue);
+    setMovies({ total: searches.length, entries: searches });
     setLoading(false);
   }
 
+  //get text dropdown and order from services
   function getOrderedData() {
-    let values = dropdownValue.split(" ");
-    let chosenValue = values[0] === "Title" ? "title" : "releaseYear";
-    let orderedValues = props.movies.entries.sort((prev: any, next: any) => {
-      return values[1] === "ascending"
-        ? prev[chosenValue] - next[chosenValue]
-        : next[chosenValue] - prev[chosenValue];
-    });
-    setMovies({ total: orderedValues.length, entries: orderedValues });
+    let dropValues = dropdownValue.split(" ");
+    let ordereds;
+    if (dropValues[0] === "Title") {
+      ordereds = GetOrderedTextData(
+        props.movies.entries,
+        "title",
+        dropValues[1]
+      );
+    } else {
+      ordereds = GetOrderedNumberData(
+        props.movies.entries,
+        "releaseYear",
+        dropValues[1]
+      );
+    }
+    setMovies({ total: ordereds.length, entries: ordereds });
   }
 
-  function getValueDropdown() {
-    $("#dropdownMovies a").on("click", function() {
-      if ($(this).text() !== dropdownValue) {
-        setDropdownValue($(this).text());
-      }
-    });
+  function getValueDropdown(value:string) {
+    console.log('value', value)
+    setDropdownValue(value)
   }
 
   function searchInput(e: FormEvent<HTMLInputElement>) {
@@ -114,57 +104,17 @@ const MoviesScreen: React.FC<any> = props => {
     );
   } else {
     return (
-      <div>
-        <SubNavBar title="Popular Movies" />
-        <div className="m-5">
-          <div className="d-flex flex-nowrap justify-content-between m-3">
-            <SearchBox
-              searchPlaceholder="Search..."
-              searchValue={searchValue}
-              searchChange={e => searchInput(e)}
-              searchClick={() => searchClick()}
-            />
-
-            <div className="dropdown">
-              <button
-                className="btn btn-light dropdown-toggle"
-                type="button"
-                id="orderButton"
-                data-toggle="dropdown"
-                onClick={() => getValueDropdown()}
-              >
-                {dropdownValue}
-              </button>
-              <div
-                id="dropdownMovies"
-                className="dropdown-menu dropdown-menu-right"
-              >
-                <a className="dropdown-item" href="#">
-                  Year descending
-                </a>
-
-                <a className="dropdown-item" href="#">
-                  Year ascending
-                </a>
-
-                <a className="dropdown-item" href="#">
-                  Title descending
-                </a>
-
-                <a className="dropdown-item" href="#">
-                  Title Ascending
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="d-flex justify-content-start flex-wrap mx-3">
-            <SeriesMoviesList
-              values={movies.entries}
-              classList="pr-1 pt-3 pb-5"
-            />
-          </div>
-        </div>
-      </div>
+      <Content
+      subTitle="Popular Movies"
+      entries={movies.entries}
+      dropdownEntries={["Year ascending","Year descending","Title ascending","Title descending"]}
+      searchValue={searchValue}
+      searchChange={e => searchInput(e)}
+      searchClick={() => searchClick()}
+      searchPlaceholder="Search..."
+      sendDropdownValue={(value:string) => getValueDropdown(value)}
+      dropdownValue={dropdownValue}
+      />
     );
   }
 };

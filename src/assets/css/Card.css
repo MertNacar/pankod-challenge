@@ -1,0 +1,10 @@
+.mycard-container {
+  border-width: 0;
+  width: "13rem";
+  max-height: 360px;
+  max-width: 150px;
+}
+.mycard-body .mycard-image {
+  max-height: 180px;
+  max-width: 150px;
+}

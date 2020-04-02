@@ -1,4 +1,5 @@
 import React from "react";
+import "../assets/css/Card.css";
 
 interface IProp {
   image: string;
@@ -8,15 +9,15 @@ interface IProp {
 
 const SeriesMoviesCard: React.FC<IProp> = props => {
   return (
-    <div className="card" style={{ borderWidth: 0 }}>
+    <div className="card mycard-container">
       <img
         src={props.image}
         className="card-img-top img-responsive"
         alt={props.alt}
-        style={{ maxHeight: 180, maxWidth: 150 }}
       />
-
-      <p className="card-text">{props.title}</p>
+      <div className="card-body mycard-body">
+        <p className="card-text mycard-image">{props.title}</p>
+      </div>
     </div>
   );
 };

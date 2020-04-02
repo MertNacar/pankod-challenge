@@ -12,7 +12,8 @@ export const seriesReducer = (
 ) => {
   switch (action.type) {
     case UPDATE_SERIES:
-      return state;
+      let newState = Object.assign({}, state, action.payload);
+      return newState;
     default:
       return state;
   }

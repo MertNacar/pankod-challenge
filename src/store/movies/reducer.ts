@@ -13,7 +13,6 @@ export const moviesReducer = (
   switch (action.type) {
     case UPDATE_MOVIES:
       let newState = Object.assign({}, state, action.payload);
-
       return newState;
     default:
       return state;

@@ -2,51 +2,44 @@ import React, { useState, useEffect, FormEvent } from "react";
 import * as Redux from "redux";
 import { connect } from "react-redux";
 import SubNavBar from "../../components/SubNavbar";
-import SeriesMoviesList from "../../components/SeriesMoviesList";
-import SearchBox from "../../components/SearchBox";
+import Content from "../../components/Content";
 import LoadingScreen from "../Loading/LoadingScreen";
 import ErrorScreen from "../Error/ErrorScreen";
+import {
+  GetAllData,
+  GetSearchedData,
+  GetOrderedNumberData,
+  GetOrderedTextData
+} from "../../services/MovieSerieService";
 import { IReduxState, IDispatchProps } from "../../store/store";
 import { updateSeries } from "../../store/series/action";
 import { SeriesActionTypes } from "../../store/series/types";
 import { ISeriesState } from "./types";
-import { get } from "../../utils/httpHelper";
 import "bootstrap";
 
 const SeriesScreen: React.FC<any> = props => {
   const [series, setSeries] = useState<ISeriesState>({ total: 0, entries: [] });
+  const [dropdownValue, setDropdownValue] = useState("Sort by");
+  const [searchValue, setSearchValue] = useState<string>("");
   const [loading, setLoading] = useState<Boolean>(true);
   const [err, setErr] = useState<Boolean>(false);
-  const [searchValue, setSearchValue] = useState<string>("");
 
   useEffect(() => {
     if (props.series.entries.length === 0) {
       getData();
+    } else if (searchValue.length >= 3) {
+      getSearchedData();
+    } else if (dropdownValue !== "Sort by") {
+      getOrderedData();
     }
-  }, []);
+  }, [searchValue, dropdownValue]);
 
   async function getData() {
     try {
-      let res = await get("feed/sample.json");
+      let res = await GetAllData("feed/sample.json", 21, "series");
       if (!res.err) {
-        let newTotal: number = 0;
-        let filteredValues = res.data.entries
-          .filter((item: any) => {
-            if (
-              newTotal < 21 &&
-              item.releaseYear >= 2010 &&
-              item.programType === "series"
-            ) {
-              newTotal++;
-              return item;
-            }
-          })
-          .sort((a: any, b: any) => {
-            return a.title - b.title;
-          });
-        props.updateSeries({ total: 21, entries: filteredValues });
-        setSeries({ total: 21, entries: filteredValues });
-        console.log("filteredValues", filteredValues);
+        props.updateSeries({ total: res.values.length, entries: res.values });
+        setSeries({ total: res.values.length, entries: res.values });
         setLoading(false);
       } else throw new Error();
     } catch {
@@ -55,12 +48,44 @@ const SeriesScreen: React.FC<any> = props => {
     }
   }
 
-  function searchInput(e: FormEvent<HTMLInputElement>) {
-    setSearchValue(e.currentTarget.value);
-    if (e.currentTarget.value.length >= 3) searchClick();
+  function getSearchedData() {
+    setLoading(true);
+    let searches = GetSearchedData(props.series.entries, searchValue);
+    setSeries({ total: searches.length, entries: searches });
+    setLoading(false);
   }
 
-  function searchClick() {}
+   //get text dropdown and order from services
+  function getOrderedData() {
+    let dropValues = dropdownValue.split(" ");
+    let ordereds;
+    if (dropValues[0] === "Title") {
+      ordereds = GetOrderedTextData(
+        props.series.entries,
+        "title",
+        dropValues[1]
+      );
+    } else {
+      ordereds = GetOrderedNumberData(
+        props.series.entries,
+        "releaseYear",
+        dropValues[1]
+      );
+    }
+    setSeries({ total: ordereds.length, entries: ordereds });
+  }
+
+  function getValueDropdown(value: string) {
+    setDropdownValue(value);
+  }
+
+  function searchInput(e: FormEvent<HTMLInputElement>) {
+    setSearchValue(e.currentTarget.value);
+  }
+
+  function searchClick() {
+    getSearchedData();
+  }
 
   if (err === true) {
     return (
@@ -77,59 +102,23 @@ const SeriesScreen: React.FC<any> = props => {
       </div>
     );
   } else {
-    console.log("props movies", props.series);
-
     return (
-      <div>
-        <SubNavBar title="Popular Series" />
-        <div className="m-5">
-          <div className="d-flex flex-nowrap justify-content-between m-3">
-            <SearchBox
-              searchPlaceholder="Search..."
-              searchValue={searchValue}
-              searchChange={e => searchInput(e)}
-              searchClick={() => searchClick()}
-            />
-
-            <div className="dropdown">
-              <button
-                className="btn btn-light dropdown-toggle"
-                type="button"
-                id="dropdownSeries"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Sort by
-              </button>
-              <div
-                className="dropdown-menu dropdown-menu-right"
-                aria-labelledby="dropdownSeries"
-              >
-                <button className="dropdown-item" type="button">
-                  Year descending
-                </button>
-                <button className="dropdown-item" type="button">
-                  Year ascending
-                </button>
-                <button className="dropdown-item" type="button">
-                  Title descending
-                </button>
-                <button className="dropdown-item" type="button">
-                  Title Ascending
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="d-flex justify-content-start flex-wrap mx-3">
-            <SeriesMoviesList
-              values={series.entries}
-              classList="pr-1 pt-3 pb-5"
-            />
-          </div>
-        </div>
-      </div>
+      <Content
+        subTitle="Popular Series"
+        entries={series.entries}
+        dropdownEntries={[
+          "Year ascending",
+          "Year descending",
+          "Title ascending",
+          "Title descending"
+        ]}
+        searchValue={searchValue}
+        searchChange={e => searchInput(e)}
+        searchClick={() => searchClick()}
+        searchPlaceholder="Search..."
+        sendDropdownValue={(value: string) => getValueDropdown(value)}
+        dropdownValue={dropdownValue}
+      />
     );
   }
 };
