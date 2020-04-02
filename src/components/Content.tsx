@@ -39,7 +39,7 @@ const Content: React.FC<IProps> = props => {
       <SubNavBar title={props.subTitle} />
       <div className="m-5">
         <div
-          className="d-flex flex-nowrap justify-content-between m-3"
+          className="d-flex flex-column flex-sm-row justify-content-between m-3"
           style={{ width: "90%" }}
         >
           <SearchBox
@@ -49,7 +49,7 @@ const Content: React.FC<IProps> = props => {
             searchClick={props.searchClick}
           />
 
-          <div className="dropdown">
+          <div className="dropdown mt-sm-5">
             <button
               className="btn btn-light dropdown-toggle"
               type="button"

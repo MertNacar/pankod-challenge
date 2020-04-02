@@ -76,7 +76,6 @@ const MoviesScreen: React.FC<any> = props => {
   }
 
   function getValueDropdown(value:string) {
-    console.log('value', value)
     setDropdownValue(value)
   }
 

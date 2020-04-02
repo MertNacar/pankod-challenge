@@ -1,5 +1,5 @@
 import React from "react";
-
+import "../assets/css/Footer.css";
 const Footer: React.FC = () => {
   return (
     <footer className="d-flex bg-dark position-fixed fixed-bottom px-5">
@@ -15,23 +15,23 @@ const Footer: React.FC = () => {
 
         <div className="row justify-content-between pb-5 pt-3">
           <div className="col-12 d-flex">
-            <span className="mr-auto">
+            <span className="social-image mr-auto">
               <img
-                className="pr-4"
+                className="social-image pr-4"
                 max-width="40"
                 height="40"
                 src="./assets/images/social/facebook-white.svg "
                 alt="facebook-icon"
               />
               <img
-                className="pr-4"
+                className="social-image pr-4"
                 max-width="40"
                 height="40"
                 src="./assets/images/social/twitter-white.svg"
                 alt="twitter-icon"
               />
               <img
-                className="pr-4"
+                className="social-image pr-4"
                 max-width="40"
                 height="40"
                 src="./assets/images/social/instagram-white.svg"
@@ -41,21 +41,21 @@ const Footer: React.FC = () => {
 
             <span className="ml-auto">
               <img
-                className="pr-4"
+                className="store-image pr-4"
                 max-width="135"
                 height="40"
                 src="./assets/images/store/app-store.svg"
                 alt="app-store"
               />
               <img
-                className="pr-4"
+                className="store-image pr-4"
                 max-width="135"
                 height="40"
                 src="./assets/images/store/play-store.svg"
                 alt="play-store"
               />
               <img
-                className="pr-4"
+                className="store-image pr-4"
                 max-width="135"
                 height="40"
                 src="./assets/images/store/windows-store.svg"
