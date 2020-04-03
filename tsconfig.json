@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es5",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "outDir": "./dist/",
+    "outDir": "dist",
     "sourceMap": true,
     "noImplicitAny": true,
     "allowJs": true,
@@ -21,11 +21,20 @@
     "isolatedModules": true,
     "jsx": "react"
   },
+  "compileOnSave": true,
+  "typeRoots": [
+    "./node_modules/@types"
+  ],
   "include": [
     "src"
   ],
   "exclude": [
     "node_modules",
-    "build"
+    "dist",
+    "webpack",
+    "jest",
+    "src/setupTests.ts",
+    "src/__mock__",
+    "src/__test__/__snapshots__"
   ]
 }

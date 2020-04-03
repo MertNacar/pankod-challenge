@@ -39,7 +39,7 @@ export async function GetAllData(
 export function GetSearchedData(
   entries: Array<Object>,
   searchValue: string
-): Array<Object> {
+): Array<any> {
   return entries.filter((item: any) => {
     return item.title.toLowerCase().search(searchValue.toLowerCase()) !== -1
       ? true
@@ -51,7 +51,7 @@ export function GetOrderedNumberData(
   entries: Array<Object>,
   value: string,
   direction: string
-): Array<Object> {
+): Array<any> {
   return entries.sort((prev: any, next: any) => {
     return direction === "ascending"
       ? prev[value] - next[value]
@@ -63,7 +63,7 @@ export function GetOrderedTextData(
   entries: Array<Object>,
   value: string,
   direction: string
-): Array<Object> {
+): Array<any> {
   return entries.sort((prev: any, next: any) => {
     return direction === "ascending"
       ? prev[value].localeCompare(next[value])

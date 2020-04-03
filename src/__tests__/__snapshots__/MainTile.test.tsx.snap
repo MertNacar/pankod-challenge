@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainTile Component return one MainTile component: Content 1`] = `
+<div
+  className="card mb-3"
+  style={
+    Object {
+      "maxHeight": 220,
+      "maxWidth": 180,
+    }
+  }
+>
+  <a
+    href="/series"
+  >
+    <img
+      alt="Wolf Creek"
+      className="card-img-top"
+      src="https://streamcoimg-a.akamaihd.net/000/128/61/12861-PosterArt-ec32a81986a45eac7e080112075ab466.jpg"
+      style={
+        Object {
+          "maxHeight": 220,
+          "maxWidth": 180,
+        }
+      }
+    />
+    <div
+      className="card-img-overlay d-flex align-items-center justify-content-center"
+    >
+      <h3
+        className="mytext card-title text-light"
+      >
+        Wolf Creek
+      </h3>
+    </div>
+  </a>
+</div>
+`;

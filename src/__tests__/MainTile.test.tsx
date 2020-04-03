@@ -2,7 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import MainTile from "../components/MainTile";
 
-it("should match titles as Wolf Creek", () => {
+describe("MainTile Component", () => {
   const wrapper = shallow(
     <MainTile
       route="/series"
@@ -12,6 +12,16 @@ it("should match titles as Wolf Creek", () => {
     />
   );
 
-  const title = wrapper.find(".text-light").text();
-  expect(title).toBe("Wolf Creek");
+  it("is exists", () => {
+    expect(wrapper.exists()).toBeTruthy();
+  });
+
+  it("return one MainTile component", () => {
+    expect(wrapper).toMatchSnapshot("Content");
+  });
+
+  it("should match titles as Wolf Creek", () => {
+    const title = wrapper.find(".text-light").text();
+    expect(title).toBe("Wolf Creek");
+  });
 });

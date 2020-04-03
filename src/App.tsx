@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import "./App.css";
 import HomeScreen from "./screens/Home/HomeScreen";
 import MoviesScreen from "./screens/Movies/MoviesScreen";
 import SeriesScreen from "./screens/Series/SeriesScreen";
@@ -10,13 +9,15 @@ import Footer from "./components/Footer";
 const App: React.FC = () => {
   return (
     <>
-      <Header />
       <Router>
-        <Route basename="/" path="/" component={HomeScreen} />
-        <Route exact path="/Movies" component={MoviesScreen} />
-        <Route exact path="/Series" component={SeriesScreen} />
+        <div className="wrap">
+          <Header />
+          <Route exact path="/" component={HomeScreen} />
+          <Route path="/Movies" component={MoviesScreen} />
+          <Route path="/Series" component={SeriesScreen} />
+        </div>
+        <Footer />
       </Router>
-      <Footer />
     </>
   );
 };

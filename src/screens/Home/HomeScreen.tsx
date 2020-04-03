@@ -7,7 +7,7 @@ const HomeScreen: React.FC = () => {
   return (
     <div>
       <SubNavBar title="Popular Titles" />
-      <div className="d-flex justify-content-start p-5">
+      <div className="d-flex flex-sm-row flex-column justify-content-start p-5">
         <span className="px-3">
           <MainTile
             route="/series"

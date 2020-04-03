@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubNavbar Component return SubNavbar with Popular Titles field: SubNavbar 1`] = `
+<nav
+  className="shadow navbar navbar-dark bg-dark"
+>
+  <h4
+    className="navbar-brand px-5"
+  >
+    Popular Titles
+  </h4>
+</nav>
+`;

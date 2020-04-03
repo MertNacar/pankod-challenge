@@ -9,7 +9,7 @@ interface IProp {
 
 const SubNavBar: React.FC<IProp> = (props) => {
   return (
-    <div className="card">
+    <div className="card mb-3" style={{ maxHeight: 220, maxWidth: 180 }}>
       <a href={props.route}>
         <img
           src={props.image}
@@ -18,7 +18,7 @@ const SubNavBar: React.FC<IProp> = (props) => {
           style={{ maxHeight: 220, maxWidth: 180 }}
         />
         <div className="card-img-overlay d-flex align-items-center justify-content-center">
-          <h3 className="card-title text-light">{props.title}</h3>
+          <h3 className="mytext card-title text-light">{props.title}</h3>
         </div>
       </a>
     </div>

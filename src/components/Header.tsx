@@ -1,12 +1,19 @@
 import React from "react";
+import { withRouter } from "react-router";
 
-const Header: React.FC = () => {
+const Header: React.FC<any> = props => {
+  function goHomeScreen() {
+    props.history.goBack();
+  }
   return (
     <header>
-      <nav className="shadow navbar navbar-dark bg-primary">
-        <a className="px-5 text-light text-decoration-none" href="http://localhost:3000">
+      <nav id="myHeader" className="shadow navbar navbar-dark bg-primary">
+        <button
+          className="px-5 text-light btn btn-outline-primary"
+          onClick={() => goHomeScreen()}
+        >
           <h4>Demo Streaming</h4>
-        </a>
+        </button>
         <span className="px-2">
           <p className="px-3 navbar-text text-light">Log in</p>
 
@@ -19,4 +26,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default withRouter(Header);

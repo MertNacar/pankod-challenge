@@ -1,5 +1,4 @@
 import React from "react";
-import "../assets/css/Card.css";
 
 interface IProp {
   image: string;

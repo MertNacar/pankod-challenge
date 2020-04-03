@@ -1,3 +1,71 @@
-html, body, #id {
-  width: 100%;
+* {
+  margin: 0;
+}
+html,
+body {
+  height: 100%;
+}
+.wrap {
+  min-height: 100%;
+  margin-bottom: -270px;
+}
+.wrap:after {
+  content: "";
+  display: block;
+}
+.myfooter,
+.wrap:after {
+  height: 250px;
+}
+.mycard-container {
+  border-width: 0;
+  width: "16rem";
+  max-height: 360px;
+  max-width: 150px;
+}
+.mycard-body .mycard-image {
+  max-height: 180px;
+  max-width: 150px;
+}
+
+.social-image-face{
+  max-width:50px;
+  height:45px;
+}
+.social-image {
+  max-width:60px;
+  height:55px;
+}
+
+.store-image {
+  max-width:165px;
+  height:60px;
+}
+
+@media only screen and (max-width: 600px) {
+  .texts{
+    font-size: 9px;
+  }
+  .wrap {
+    min-height: 100%;
+    margin-bottom: -290px;
+  }
+  .myfooter,
+  .wrap:after {
+    height: 260px;
+  }
+  .social-image-face{
+    max-width:40px;
+    height:30px;
+  }
+  .social-image {
+    max-width:40px;
+    height:40px;
+  }
+  
+  .store-image {
+    max-width:135px;
+    height:40px;
+  }
+  
 }

@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SeriesMoviesCard Component return one card item filled with first item of mock data: SeriesMoviesCard 1`] = `
+<div
+  className="card mycard-container"
+>
+  <img
+    alt="Wolf Creek"
+    className="card-img-top img-responsive"
+    src="https://streamcoimg-a.akamaihd.net/000/128/61/12861-PosterArt-ec32a81986a45eac7e080112075ab466.jpg"
+  />
+  <div
+    className="card-body mycard-body"
+  >
+    <p
+      className="card-text mycard-image"
+    >
+      Wolf Creek
+    </p>
+  </div>
+</div>
+`;
