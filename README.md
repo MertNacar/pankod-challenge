@@ -1,9 +1,5 @@
 # pankod-challenge
-<br></br>
-
 ## In the project directory, you should run with priorty order
-<br></br>
-
 ### `yarn` or `npm i`
 for install node_modules
 <br></br>
