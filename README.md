@@ -1,4 +1,6 @@
 # pankod-challenge
+This challenge is for pankod's recruiting that includes three pages and made with react-typescript
+
 ## In the project directory, you should run with priorty order
 ### `yarn` or `npm i`
 for install node_modules
