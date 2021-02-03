@@ -6,7 +6,7 @@ import mockData from "../../public/feed/test/mock_test.json";
 describe("Content Component", () => {
   const wrapper = shallow(
     <Content
-      subTitle="Popular Movies"
+      title="Popular Movies"
       entries={mockData}
       dropdownEntries={[
         "Year ascending",

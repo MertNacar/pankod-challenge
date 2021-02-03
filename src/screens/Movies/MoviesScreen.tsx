@@ -9,15 +9,15 @@ import {
   GetAllData,
   GetSearchedData,
   GetOrderedNumberData,
-  GetOrderedTextData
+  GetOrderedTextData,
 } from "../../services/MovieSerieService";
 import { IReduxState, IDispatchProps } from "../../store/store";
 import { updateMovies } from "../../store/movies/action";
 import { MoviesActionTypes } from "../../store/movies/types";
 import { IMoviesState } from "./types";
-import 'bootstrap'
+// import "bootstrap";
 
-const MoviesScreen: React.FC<any> = props => {
+const MoviesScreen: React.FC<any> = (props) => {
   const [movies, setMovies] = useState<IMoviesState>({ total: 0, entries: [] });
   const [dropdownValue, setDropdownValue] = useState("Sort by");
   const [searchValue, setSearchValue] = useState<string>("");
@@ -75,8 +75,8 @@ const MoviesScreen: React.FC<any> = props => {
     setMovies({ total: ordereds.length, entries: ordereds });
   }
 
-  function getValueDropdown(value:string) {
-    setDropdownValue(value)
+  function getValueDropdown(value: string) {
+    setDropdownValue(value);
   }
 
   function searchInput(e: FormEvent<HTMLInputElement>) {
@@ -87,32 +87,30 @@ const MoviesScreen: React.FC<any> = props => {
     getSearchedData();
   }
 
-  if (err === true) {
+  if (err || loading) {
     return (
       <div>
         <SubNavBar title="Popular Movies" />
-        <ErrorScreen />
-      </div>
-    );
-  } else if (loading === true) {
-    return (
-      <div>
-        <SubNavBar title="Popular Movies" />
-        <LoadingScreen />
+        {loading ? <LoadingScreen /> : <ErrorScreen />}
       </div>
     );
   } else {
     return (
       <Content
-      subTitle="Popular Movies"
-      entries={movies.entries}
-      dropdownEntries={["Year ascending","Year descending","Title ascending","Title descending"]}
-      searchValue={searchValue}
-      searchChange={e => searchInput(e)}
-      searchClick={() => searchClick()}
-      searchPlaceholder="Search..."
-      sendDropdownValue={(value:string) => getValueDropdown(value)}
-      dropdownValue={dropdownValue}
+        title="Popular Movies"
+        entries={movies.entries}
+        dropdownEntries={[
+          "Year ascending",
+          "Year descending",
+          "Title ascending",
+          "Title descending",
+        ]}
+        searchValue={searchValue}
+        searchChange={(e) => searchInput(e)}
+        searchClick={() => searchClick()}
+        searchPlaceholder="Search..."
+        sendDropdownValue={(value: string) => getValueDropdown(value)}
+        dropdownValue={dropdownValue}
       />
     );
   }
@@ -120,14 +118,14 @@ const MoviesScreen: React.FC<any> = props => {
 
 function mapStateToProps(state: IReduxState): IReduxState {
   return {
-    movies: state.movies
+    movies: state.movies,
   };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch): IDispatchProps {
   return {
     updateMovies: (movies: IMoviesState): MoviesActionTypes =>
-      dispatch(updateMovies(movies))
+      dispatch(updateMovies(movies)),
   };
 }
 

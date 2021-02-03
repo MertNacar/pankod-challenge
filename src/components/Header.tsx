@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router";
 
-const Header: React.FC<any> = props => {
+const Header: React.FC<any> = (props) => {
   function goHomeScreen() {
     props.history.goBack();
   }

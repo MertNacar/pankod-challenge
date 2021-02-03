@@ -2,8 +2,8 @@ export const get = async (endpoint: string) => {
   try {
     const res = await fetch(endpoint, {
       headers: {
-        Accept: "application/json"
-      }
+        Accept: "application/json",
+      },
     });
     if (res.status === 200) {
       const response = await res.json();

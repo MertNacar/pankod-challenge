@@ -1,22 +1,22 @@
 import { get } from "../utils/httpHelper";
-
-interface AllData {
-  values: Array<Object>;
-  err: boolean;
-}
+import {
+  IMovieSerieAllData,
+  IResponseMovieSerie,
+  IMovieSerieObject,
+} from "./types";
 
 //get initial filtered data
 export async function GetAllData(
   endpoint: string,
   limit: number,
   programType: string
-): Promise<AllData> {
+): Promise<IMovieSerieAllData> {
   try {
-    let res = await get(endpoint);
+    let res: IResponseMovieSerie = await get(endpoint);
     if (!res.err) {
       let newTotal: number = 0;
       let filteredValues = res.data.entries
-        .filter((item: any) => {
+        .filter((item: IMovieSerieObject) => {
           if (
             newTotal < limit &&
             item.releaseYear >= 2010 &&
@@ -26,8 +26,8 @@ export async function GetAllData(
             return item;
           }
         })
-        .sort((a: any, b: any) => {
-          return a.title - b.title;
+        .sort((a: IMovieSerieObject, b: IMovieSerieObject) => {
+          return a.title.localeCompare(b.title);
         });
       return { values: filteredValues, err: false };
     } else throw new Error();
